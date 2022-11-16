@@ -1,0 +1,58 @@
+{
+  "_id": "63737c5e0c62e55709d71550",
+  "table": "123",
+  "status": "IN_PRODUCTION",
+  "products": [
+    {
+      "product": {
+        "_id": "637371fcc46a9ad151567f59",
+        "name": "Pizza quatro queijos",
+        "description": "Deliciosa pizza quatro queijos com borda simples",
+        "imagePath": "1668510204345-quatro-queijos.png",
+        "price": 40,
+        "ingredients": [
+          {
+            "name": "Mussarela",
+            "icon": "🧀",
+            "_id": "637371fcc46a9ad151567f5a"
+          },
+          {
+            "name": "Parmesão",
+            "icon": "🧀",
+            "_id": "637371fcc46a9ad151567f5b"
+          },
+          {
+            "name": "Gouda",
+            "icon": "🧀",
+            "_id": "637371fcc46a9ad151567f5c"
+          },
+          {
+            "name": "Brie",
+            "icon": "🧀",
+            "_id": "637371fcc46a9ad151567f5d"
+          }
+        ],
+        "category": "637364313c7ed91c87114e72",
+        "__v": 0
+      },
+      "quantity": 3,
+      "_id": "63737c5e0c62e55709d71551"
+    },
+    {
+      "product": {
+        "_id": "6373765a355f415b8480770b",
+        "name": "Coca cola",
+        "description": "Coca cola lata geladinha topzera",
+        "imagePath": "1668511321990-coca-cola.png",
+        "price": 7,
+        "ingredients": [],
+        "category": "6373648d3c7ed91c87114e74",
+        "__v": 0
+      },
+      "quantity": 2,
+      "_id": "63737c5e0c62e55709d71552"
+    }
+  ],
+  "createdAt": "2022-11-15T11:47:42.560Z",
+  "__v": 0
+}
