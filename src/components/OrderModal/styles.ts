@@ -23,6 +23,10 @@ export const ModalBody = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  :hover {
+    transition: all 0.3s ease-out;
+    box-shadow: 0px 3px 3px -2px rgb(0 0 0 / 20%), 0px 3px 4px 0px rgb(0 0 0 / 14%), 0px 1px 8px 0px rgb(0 0 0 / 12%);
+  }
 
   header {
     width: 100%;
@@ -31,7 +35,6 @@ export const ModalBody = styled.div`
     justify-content: space-between;
 
     strong {
-
       font-size: 24px;
     }
 
@@ -160,17 +163,26 @@ export const Actions = styled.footer`
     width: 100%;
     border: 0;
     height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid rgba(204, 204, 204, 0.4);
+    border-radius: 48px;
+    :hover {
+      transition: all 0.3s ease-out;
+      box-shadow: 0px 3px 3px -2px rgb(0 0 0 / 20%), 0px 3px 4px 0px rgb(0 0 0 / 14%), 0px 1px 8px 0px rgb(0 0 0 / 12%);
+    }
   }
 
   .primary {
     padding: 12px 24px;
     background: #333333;
-    border-radius: 48px;
     color: white;
 
   }
 
   .secondary {
+    /* border: 2px solid rgba(204, 204, 204, 0.4); */
     padding: 14px 24px;
     color: #d73035;
     font-weight: bold;

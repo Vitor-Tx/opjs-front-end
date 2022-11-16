@@ -1,8 +1,10 @@
 import { Container } from "./styles";
 import { OrdersBoard } from "../OrdersBoard/index";
 import { Order } from "../../types/Order";
+import { useState } from "react";
 
 export function Orders() {
+
   const orders: Order[] = [{
     _id: "63737c5e0c62e55709d71550",
     table: "123",
@@ -47,26 +49,30 @@ export function Orders() {
     ],
   }
   ];
+  const [ordersState, setOrdersState] = useState(orders);
 
-  const orders2: Order[] = [];
+
 
   return (
 
     <Container>
       <OrdersBoard
         icon="🕔"
-        title="Fila de espera"
-        orders={orders}
+        status="WAITING"
+        orders={ordersState}
+        setOrdersState={setOrdersState}
       />
       <OrdersBoard
         icon="👨‍🍳"
-        title="Em preparação"
-        orders={orders}
+        status="IN_PRODUCTION"
+        orders={ordersState}
+        setOrdersState={setOrdersState}
       />
       <OrdersBoard
         icon="✅"
-        title="Pronto!"
-        orders={orders2}
+        status="DONE"
+        orders={ordersState}
+        setOrdersState={setOrdersState}
       />
     </Container>
   );

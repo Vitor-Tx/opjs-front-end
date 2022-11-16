@@ -6,9 +6,13 @@ export const Board = styled.div`
   border: 1px solid rgba(204, 204, 204, 0.4);
   border-radius: 16px;
   display: flex;
-  justify-content: center;
+  justify-content: start;
   flex-direction: column;
   align-items: center;
+  /* :hover {
+    transition: all 0.3s ease-out;
+    box-shadow: 0px 3px 3px -2px rgb(0 0 0 / 20%), 0px 3px 4px 0px rgb(0 0 0 / 14%), 0px 1px 8px 0px rgb(0 0 0 / 12%);
+  } */
 
   > header {
     padding: 8px;
@@ -37,6 +41,11 @@ export const OrdersContainer = styled.div`
     align-items: center;
     justify-content: center;
     gap: 4px;
+    :hover {
+      transition: all 0.3s ease-out;
+      box-shadow: 0px 3px 3px -2px rgb(0 0 0 / 20%), 0px 3px 4px 0px rgb(0 0 0 / 14%), 0px 1px 8px 0px rgb(0 0 0 / 12%);
+    }
+
     strong {
       font-weight: 500;
     }

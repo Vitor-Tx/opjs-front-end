@@ -2,28 +2,41 @@ import { Overlay, ModalBody, OrderDetails, Actions} from "./styles";
 import closeIcon from "../../assets/images/close-icon.svg";
 import { Order } from "../../types/Order";
 import { formatCurrency } from "../../utils/formatCurrency";
+import { useEffect } from "react";
 
 interface OrderModalProps {
   visible: boolean;
   order: null | Order;
   onClose: () => void;
+  onCancel: (order_id : string) => void;
+  onChangeOrderStatus: (order_id : string, nextStatus: "WAITING" | "IN_PRODUCTION" | "DONE") => void;
 }
 
-export function OrderModal({ visible, order, onClose }: OrderModalProps) {
+export function OrderModal({ visible, order, onClose, onCancel, onChangeOrderStatus }: OrderModalProps) {
+
+  useEffect(() =>{
+    function handleKeyDown(event : KeyboardEvent) {
+      if(event.key === "Escape") {
+        onClose();
+      }
+    }
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [onClose]);
 
   if (!visible || !order) {
     return null;
   }
 
-  /* let total = 0;
-
-  order.products.forEach(({product, quantity}) => {
-    total += product.price * quantity;
-  }); */
-
   const total = order.products.reduce((total, {product, quantity}) => {
     return total + (product.price * quantity);
   }, 0);
+
+  const nextStatus = order.status === "WAITING" ? "IN_PRODUCTION" : "DONE";
 
   return (
 
@@ -81,11 +94,17 @@ export function OrderModal({ visible, order, onClose }: OrderModalProps) {
         </OrderDetails>
 
         <Actions>
-          <button type="button" className="primary">
-            <span>👨‍🍳</span>
-            <strong> Iniciar Produção</strong>
+          <button type="button" className="primary" onClick={() => onChangeOrderStatus(order._id, nextStatus)}>
+            <span>
+              {order.status === "WAITING" && "👨‍🍳"}
+              {order.status === "IN_PRODUCTION" && "✅"}
+            </span>
+            <strong>
+              {order.status === "WAITING" && " Iniciar Produção"}
+              {order.status === "IN_PRODUCTION" && " Concluir Pedido"}
+            </strong>
           </button>
-          <button type="button" className="secondary">
+          <button type="button" className="secondary" onClick={() => onCancel(order._id)}>
             Cancelar Pedido
           </button>
         </Actions>
