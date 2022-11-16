@@ -7,6 +7,14 @@ export const Container = styled.header`
   height: 198px;
   align-items: center;
 
+  @media (max-width: 768px){
+    height: 300px;
+    img {
+      max-width: 100%;
+    }
+  }
+
+
 `;
 
 export const Content = styled.div`
@@ -15,6 +23,14 @@ export const Content = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  @media (max-width: 768px){
+    text-align: center;
+    flex-direction: column-reverse;
+    gap: 20px;
+    height: 300px;
+    justify-content: center;
+  }
 
   h1 {
     color: white;

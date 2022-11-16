@@ -3,7 +3,7 @@ import React from "react";
 import { App } from "./App";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  //
-  <App />
-  //</React.StrictMode>
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
 );

@@ -27,8 +27,12 @@ export const ModalBody = styled.div`
     transition: all 0.3s ease-out;
     box-shadow: 0px 3px 3px -2px rgb(0 0 0 / 20%), 0px 3px 4px 0px rgb(0 0 0 / 14%), 0px 1px 8px 0px rgb(0 0 0 / 12%);
   }
+  @media (max-width: 768px){
+    width: calc(100% - 40px);
+  }
 
   header {
+    height: 40px;
     width: 100%;
     display: flex;
     align-items: center;
@@ -42,6 +46,18 @@ export const ModalBody = styled.div`
       line-height: 0;
       border: 0;
       background: transparent;
+      border-radius: 50%;
+      background: #D73035;
+      height: 100%;
+      width: 40px;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+      :hover {
+        transition: all 0.3s ease-out;
+        box-shadow: 0px 3px 3px -2px rgb(0 0 0 / 20%), 0px 3px 4px 0px rgb(0 0 0 / 14%), 0px 1px 8px 0px rgb(0 0 0 / 12%);
+      }
     }
 
 
