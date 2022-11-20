@@ -1,4 +1,4 @@
-import { Overlay, ModalBody, OrderDetails, Actions} from "./styles";
+import { Overlay, ModalBody, OrderDetails, Actions } from "./styles";
 import closeIcon from "../../assets/images/close-icon.svg";
 import { Order } from "../../types/Order";
 import { formatCurrency } from "../../utils/formatCurrency";
@@ -7,16 +7,23 @@ import { useEffect } from "react";
 interface OrderModalProps {
   visible: boolean;
   order: null | Order;
+  isLoading: boolean;
   onClose: () => void;
-  onCancel: (order_id : string) => void;
-  onChangeOrderStatus: (order_id : string, nextStatus: "WAITING" | "IN_PRODUCTION" | "DONE") => void;
+  onCancelOrder: () => void;
+  onChangeOrderStatus: () => void;
 }
 
-export function OrderModal({ visible, order, onClose, onCancel, onChangeOrderStatus }: OrderModalProps) {
-
-  useEffect(() =>{
-    function handleKeyDown(event : KeyboardEvent) {
-      if(event.key === "Escape") {
+export function OrderModal({
+  visible,
+  order,
+  isLoading,
+  onClose,
+  onCancelOrder,
+  onChangeOrderStatus,
+}: OrderModalProps) {
+  useEffect(() => {
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
         onClose();
       }
     }
@@ -32,14 +39,11 @@ export function OrderModal({ visible, order, onClose, onCancel, onChangeOrderSta
     return null;
   }
 
-  const total = order.products.reduce((total, {product, quantity}) => {
-    return total + (product.price * quantity);
+  const total = order.products.reduce((total, { product, quantity }) => {
+    return total + product.price * quantity;
   }, 0);
 
-  const nextStatus = order.status === "WAITING" ? "IN_PRODUCTION" : "DONE";
-
   return (
-
     <Overlay>
       <ModalBody>
         <header>
@@ -60,7 +64,8 @@ export function OrderModal({ visible, order, onClose, onCancel, onChangeOrderSta
             <strong>
               {order.status === "WAITING" && " Fila de espera"}
               {order.status === "IN_PRODUCTION" && " Em produção"}
-              {order.status === "DONE" && " Pronto!"}</strong>
+              {order.status === "DONE" && " Pronto!"}
+            </strong>
           </div>
         </div>
 
@@ -75,9 +80,7 @@ export function OrderModal({ visible, order, onClose, onCancel, onChangeOrderSta
                   width="48"
                   height="48"
                 />
-                <span className="quantity">
-                  {quantity}x
-                </span>
+                <span className="quantity">{quantity}x</span>
 
                 <div className="product-details">
                   <strong>{product.name}</strong>
@@ -94,23 +97,33 @@ export function OrderModal({ visible, order, onClose, onCancel, onChangeOrderSta
         </OrderDetails>
 
         <Actions>
-          <button type="button" className="primary" onClick={() => onChangeOrderStatus(order._id, nextStatus)}>
-            <span>
-              {order.status === "WAITING" && "👨‍🍳"}
-              {order.status === "IN_PRODUCTION" && "✅"}
-            </span>
-            <strong>
-              {order.status === "WAITING" && " Iniciar Produção"}
-              {order.status === "IN_PRODUCTION" && " Concluir Pedido"}
-            </strong>
-          </button>
-          <button type="button" className="secondary" onClick={() => onCancel(order._id)}>
+          {order.status !== "DONE" && (
+            <button
+              type="button"
+              className="primary"
+              onClick={onChangeOrderStatus}
+              disabled={isLoading}
+            >
+              <span>
+                {order.status === "WAITING" && "👨‍🍳"}
+                {order.status === "IN_PRODUCTION" && "✅"}
+              </span>
+              <strong>
+                {order.status === "WAITING" && " Iniciar Produção"}
+                {order.status === "IN_PRODUCTION" && " Concluir Pedido"}
+              </strong>
+            </button>
+          )}
+          <button
+            type="button"
+            className="secondary"
+            onClick={() => onCancelOrder()}
+            disabled={isLoading}
+          >
             Cancelar Pedido
           </button>
         </Actions>
       </ModalBody>
     </Overlay>
-
-
   );
 }

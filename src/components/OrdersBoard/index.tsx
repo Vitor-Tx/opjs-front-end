@@ -1,52 +1,56 @@
-import { Board, OrdersContainer } from "./styles";
-import { Order } from "../../types/Order";
-import { OrderModal } from "../OrderModal/index";
 import { useState } from "react";
+import { toast } from "react-toastify";
+import { Order } from "../../types/Order";
+import { api } from "../../utils/api";
+import { OrderModal } from "../OrderModal/index";
+import { Board, OrdersContainer } from "./styles";
 
 interface OrdersBoardProps {
   icon: string;
   status: "WAITING" | "IN_PRODUCTION" | "DONE";
   orders: Order[];
-  /* changeOrderStatus: (order_id: string, nextStatus: "WAITING" | "IN_PRODUCTION" | "DONE") => void; */
-  setOrdersState: React.Dispatch<React.SetStateAction<Order[]>>;
+  onChangeOrderStatus: (orderId: string, status: Order["status"]) => void;
+  onCancelOrder: (orderId: string) => void;
 }
 
-export function OrdersBoard({ icon, status, orders, setOrdersState }: OrdersBoardProps) {
+export function OrdersBoard({ icon, status, orders, onChangeOrderStatus, onCancelOrder }: OrdersBoardProps) {
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState<null | Order>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   function handleOpenModal(order: Order) {
     setIsModalVisible(true);
     setSelectedOrder(order);
   }
 
-  function handleCloseModal() {
+  async function handleCloseModal() {
     setIsModalVisible(false);
     setSelectedOrder(null);
   }
 
-  function cancelOrder(order_id: string) {
-    const indexOfOrder = orders.findIndex(order => {
-      return order._id === order_id;
-    });
-    orders.splice(indexOfOrder, 1);
-    const aux_orders: Array<Order> = JSON.parse(JSON.stringify(orders));
-    setOrdersState(aux_orders);
-    handleCloseModal();
+  async function handleChangeStatus() {
+    setIsLoading(true);
+    const status = selectedOrder?.status === "WAITING"
+      ?  "IN_PRODUCTION"
+      :  "DONE";
+    await api.patch(`/orders/${selectedOrder?._id}`, { status }) ;
+
+    toast.success(`O pedido da mesa ${selectedOrder?.table} teve o status alterado!`);
+    onChangeOrderStatus(selectedOrder!._id, status);
+    setIsLoading(false);
+    setIsModalVisible(false);
   }
 
-  function changeOrderStatus(order_id: string, nextStatus: "WAITING" | "IN_PRODUCTION" | "DONE" ) {
-
-    console.log(nextStatus);
-    console.log(orders);
-    const indexOfOrder = orders.findIndex(order => {
-      return order._id === order_id;
-    });
-    orders[indexOfOrder].status = nextStatus;
-    const aux_orders: Array<Order> = JSON.parse(JSON.stringify(orders));
-    setOrdersState(aux_orders);
+  async function handleCancelOrder() {
+    setIsLoading(true);
+    await api.delete(`/orders/${selectedOrder?._id}`);
+    toast.success(`O pedido da mesa ${selectedOrder?.table} foi cancelado`);
+    onCancelOrder(selectedOrder!._id);
+    setIsLoading(false);
+    setIsModalVisible(false);
   }
+
 
 
 
@@ -57,8 +61,9 @@ export function OrdersBoard({ icon, status, orders, setOrdersState }: OrdersBoar
         visible={isModalVisible}
         order={selectedOrder}
         onClose={handleCloseModal}
-        onCancel={cancelOrder}
-        onChangeOrderStatus={changeOrderStatus}
+        isLoading={isLoading}
+        onCancelOrder={handleCancelOrder}
+        onChangeOrderStatus={handleChangeStatus}
 
       />
       <header>
