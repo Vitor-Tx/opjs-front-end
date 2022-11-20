@@ -6,7 +6,7 @@
 <br>
 
 <p align="center">
-  <a href="#user-content-o-que-é-o-soulskut">Sobre</a> •
+  <a href="#user-content-o-que-é-o-waiterapp">Sobre</a> •
  <a href="#user-content-funcionalidades">Funcionalidades</a> •
  <a href="#user-content-build-e-run">Como executar</a>
 </p>
@@ -94,7 +94,7 @@ $ npm run dev
 - ESLint
 - etc
 
-[![licence mit](https://img.shields.io/badge/licence-MIT-blue.svg?style=flat-square)](https://github.com/Vitor-Tx/SoulsKut/blob/master/LICENSE)
+[![licence mit](https://img.shields.io/badge/licence-MIT-blue.svg?style=flat-square)](https://github.com/Vitor-Tx/opjs-front-end/blob/master/LICENSE)
 
 
 Feito por Vitor Teixeira. [Entre em contato!](https://www.linkedin.com/in/vitor-teixeira-eof/)
